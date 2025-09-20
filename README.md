@@ -56,10 +56,59 @@ options:
 ```
 
 ## Result
-| Input | Output |
-|-------|---------|
-| [input_1.webm](https://github.com/user-attachments/assets/131ef7e2-73a1-4aa8-a756-b407cddce141) | [output_1.webm](https://github.com/user-attachments/assets/8115452d-cc56-4a54-b44a-5d102d67154e) |
-| [input_2.webm](https://github.com/user-attachments/assets/b175cf32-c3d7-4fd9-9de4-355fe5fd7601) | [output_2.webm](https://github.com/user-attachments/assets/65c78ba4-b319-45c9-be8b-65002e018137) |
+<table>
+<tr>
+<td align="center">
+    
+**Input 1**
+</td>
+<td align="center">
+    
+**Output 1**
+</td>
+</tr>
+
+<tr>
+<td align="center">
+
+[input_1.webm](https://github.com/user-attachments/assets/131ef7e2-73a1-4aa8-a756-b407cddce141)
+
+</td>
+<td align="center">
+    
+[output_1.webm](https://github.com/user-attachments/assets/8115452d-cc56-4a54-b44a-5d102d67154e)
+
+</td>
+</tr>
+</table>
+
+---
+
+<table>
+<tr>
+<td align="center">
+    
+**Input 2**
+</td>
+<td align="center">
+    
+**Output 2**
+</td>
+</tr>
+
+<tr>
+<td align="center">
+
+[input_2.webm](https://github.com/user-attachments/assets/b175cf32-c3d7-4fd9-9de4-355fe5fd7601)
+
+</td>
+<td align="center">
+    
+[output_2.webm](https://github.com/user-attachments/assets/65c78ba4-b319-45c9-be8b-65002e018137)
+
+</td>
+</tr>
+</table>
 
 ## License
 
