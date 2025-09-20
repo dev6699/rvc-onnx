@@ -58,9 +58,8 @@ options:
 ## Result
 | Input | Output |
 |-------|---------|
-| <audio controls src="assets/input_1.wav"></audio> | <audio controls src="assets/output_1.wav"></audio> |
-| <audio controls src="assets/input_2.wav"></audio> | <audio controls src="assets/output_2.wav"></audio> |
-
+| [input_1.wav](https://github.com/user-attachments/files/22439332/input_1.wav) | [output_1.wav](https://github.com/user-attachments/files/22439334/output_1.wav) |
+| [input_2.wav](https://github.com/user-attachments/files/22439336/input_2.wav) | [output_2.wav](https://github.com/user-attachments/files/22439338/output_2.wav) |
 
 ## License
 
