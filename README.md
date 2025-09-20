@@ -58,8 +58,8 @@ options:
 ## Result
 | Input | Output |
 |-------|---------|
-| [input_1.webm](https://github.com/user-attachments/files/22439332/input_1.wav) | [output_1.webm](https://github.com/user-attachments/files/22439334/output_1.wav) |
-| [input_2.webm](https://github.com/user-attachments/files/22439336/input_2.wav) | [output_2.webm](https://github.com/user-attachments/files/22439338/output_2.wav) |
+| [input_1.webm](https://github.com/user-attachments/assets/131ef7e2-73a1-4aa8-a756-b407cddce141) | [output_1.webm](https://github.com/user-attachments/assets/8115452d-cc56-4a54-b44a-5d102d67154e) |
+| [input_2.webm](https://github.com/user-attachments/assets/b175cf32-c3d7-4fd9-9de4-355fe5fd7601) | [output_2.webm](https://github.com/user-attachments/assets/65c78ba4-b319-45c9-be8b-65002e018137) |
 
 ## License
 
