@@ -1,11 +1,11 @@
 # RVC-ONNX
 
 RVC-ONNX is a lightweight inference wrapper around ONNX Runtime for running Retrieval-based Voice Conversion (RVC) models.  
-This project supports RVC v2 models and performs inference in FP16 for faster execution and reduced memory usage.
+This project supports RVC models and performs inference in FP16 for faster execution and reduced memory usage.
 
 ## Features
 
-- RVC v2 model inference with ONNX Runtime
+- RVC model inference with ONNX Runtime
 - FP16 inference for performance
 - F0 extraction with RMVPE
 - Command-line interface for quick usage
@@ -22,14 +22,21 @@ uv sync
 ```
 
 Get models from: [here](https://huggingface.co/NaruseMioShirakana/MoeSS-SUBModel/tree/main)
-- vec-768-layer-12.onnx
+- vec-256-layer-9.onnx (for V1)
+- vec-768-layer-12.onnx (for V2)
 - rmvpe.onnx
 
 Usage:
 ```bash
-uv run rvc-onnx --help
+# For V1 model
+uv run rvc-onnx --input assets/input_1.wav --output assets/output_1.wav --model-path models/v1.onnx --vec-path models/vec-256-layer-9.onnx
 
-usage: rvc-onnx [-h] --input INPUT --output OUTPUT [--sid SID] [--f0-up-key F0_UP_KEY] [--sr SR]
+# For V2 model
+uv run rvc-onnx --input assets/input_1.wav --output assets/output_1.wav --model-path models/v2.onnx --vec-path models/vec-768-layer-12.onnx
+
+# Help
+uv run rvc-onnx --help
+usage: rvc-onnx [-h] --input INPUT --output OUTPUT [--sid SID] [--f0-up-key F0_UP_KEY]
                 [--model-path MODEL_PATH] [--vec-path VEC_PATH] [--rmvpe-path RMVPE_PATH]
 
 Run RVC inference with ONNX models
@@ -41,13 +48,20 @@ options:
   --sid SID             Speaker ID
   --f0-up-key F0_UP_KEY
                         Pitch shift amount
-  --sr SR               Input sample rate (default=16000)
   --model-path MODEL_PATH
-                        Path to main ONNX model
+                        Path to rvc ONNX model
   --vec-path VEC_PATH   Path to ContentVec model
   --rmvpe-path RMVPE_PATH
                         Path to RMVPE model
 ```
+
+## Result
+| Input | Output |
+|-------|---------|
+| <audio controls src="assets/input_1.wav"></audio> | <audio controls src="assets/output_1.wav"></audio> |
+| <audio controls src="assets/input_2.wav"></audio> | <audio controls src="assets/output_2.wav"></audio> |
+
+
 ## License
 
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/dev6699/rntv/blob/main/LICENSE)
