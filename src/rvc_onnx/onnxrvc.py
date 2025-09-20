@@ -14,7 +14,7 @@ class OnnxRVC:
     Parameters
     ----------
     model_path : str
-        Path to main ONNX model.
+        Path to RVC ONNX model.
     vec_path : str
         Path to ContentVec model.
     rmvpe_path : str
@@ -29,6 +29,21 @@ class OnnxRVC:
         vec_path: str,
         rmvpe_path: str,
         providers: Optional[List[str]] = None,
+
+        # --- Audio params ---
+        sr: int = 16000,       # Input sample rate (Hubert/ContentVec)
+        tgt_sr: int = 40000,   # Default target sample rate
+        window: int = 160,     # Samples per frame (at sr=16k)
+
+        # --- Padding / slicing defaults ---
+        x_pad: int = 3,
+        x_query: int = 10,
+        x_center: int = 50,
+        x_max: int = 50,
+
+        # --- Processing params ---
+        rms_mix_rate: float = 0.25,
+        protect: float = 0.33,
     ):
         self.vec_path = vec_path
         self.rmvpe_path = rmvpe_path
@@ -48,16 +63,27 @@ class OnnxRVC:
         # sess_opts.enable_cpu_mem_arena = False
         self.model = onnxruntime.InferenceSession(model_path, sess_options=sess_opts, providers=providers)
 
-        # --- Audio and windowing params ---
-        self.sr = 16000                # Input sample rate (Hubert/ContentVec)
-        self.tgt_sr = 40000            # Target sample rate
-        self.window = 160              # Samples per frame (at sr=16k)
+        # --- Read metadata, override tgt_sr if present ---
+        model_meta = self.model.get_modelmeta().custom_metadata_map
+        if "config" in model_meta:
+            try:
+                import json
+                config = json.loads(model_meta["config"])
+                if isinstance(config, (list, tuple)) and len(config) > 0:
+                    tgt_sr = int(config[-1])
+            except Exception:
+                pass
 
-        # Padding / slicing windows
-        self.x_pad = 3
-        self.x_query = 10
-        self.x_center = 50
-        self.x_max = 50
+        # --- Audio and windowing params ---
+        self.sr = sr
+        self.tgt_sr = tgt_sr
+        self.window = window
+
+        # --- Padding / slicing windows ---
+        self.x_pad = x_pad
+        self.x_query = x_query
+        self.x_center = x_center
+        self.x_max = x_max
 
         # Derived params (in samples)
         self.t_pad = self.sr * self.x_pad
@@ -67,9 +93,9 @@ class OnnxRVC:
         self.t_center = self.sr * self.x_center
         self.t_max = self.sr * self.x_max
 
-        # Processing params
-        self.rms_mix_rate = 0.25
-        self.protect = 0.33
+        # --- Processing params ---
+        self.rms_mix_rate = rms_mix_rate
+        self.protect = protect
 
     def forward(self, 
                 hubert: np.ndarray, 
@@ -415,7 +441,7 @@ class OnnxRVC:
 
     def inference(
         self,
-        audio: np.ndarray, 
+        audio_path: str, 
         sid: int,
         f0_up_key: float,
     ):
@@ -424,8 +450,8 @@ class OnnxRVC:
 
         Parameters
         ----------
-        audio : np.ndarray
-            Input waveform (1D float array).
+        audio_path : str
+            Path to audio file.
         sid : int
             Speaker ID.
         f0_up_key : float
@@ -436,6 +462,7 @@ class OnnxRVC:
         np.ndarray: 
             Final synthesized waveform.
         """
+        audio, _ = librosa.load(audio_path, sr=self.sr, mono=True)
         audio_pad = self.preprocess(audio)
         opt_ts, audio_pad = self.find_optimal_timestamps(audio, audio_pad)
         pitchf, pitch = self.extract_f0(audio_pad, f0_up_key)
