@@ -14,15 +14,6 @@ class ContentVec:
         List of execution providers.
     """
     def __init__(self, model_path: str, providers: Optional[List[str]] = None):
-        
-        available_providers = onnxruntime.get_available_providers()
-
-        if providers is None:
-            if "CUDAExecutionProvider" in available_providers:
-                providers = ["CUDAExecutionProvider"]
-            else:
-                providers = ["CPUExecutionProvider"]
-
         self.model = onnxruntime.InferenceSession(model_path, providers=providers)
 
     def forward(self, wav: np.ndarray) -> np.ndarray:

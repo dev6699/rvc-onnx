@@ -4,8 +4,8 @@ import numpy as np
 from scipy import signal
 from typing import List, Optional
 
-from .rmvpe import RMVPE
-from .vec import ContentVec
+from rvc_onnx.rmvpe import RMVPE
+from rvc_onnx.vec import ContentVec
 
 class OnnxRVC:
     """
@@ -47,13 +47,6 @@ class OnnxRVC:
     ):
         self.vec_path = vec_path
         self.rmvpe_path = rmvpe_path
-
-        available_providers = onnxruntime.get_available_providers()
-        if providers is None:
-            if "CUDAExecutionProvider" in available_providers:
-                providers = ["CUDAExecutionProvider"]
-            else:
-                providers = ["CPUExecutionProvider"]
         self.providers = providers
 
         sess_opts = onnxruntime.SessionOptions()

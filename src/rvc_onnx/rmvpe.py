@@ -2,7 +2,7 @@ import onnxruntime
 import numpy as np
 from typing import List, Optional
 
-from .mel import MelSpectrogram
+from rvc_onnx.mel import MelSpectrogram
 
 class RMVPE:
     """
@@ -31,13 +31,6 @@ class RMVPE:
             mel_fmin=30,
             mel_fmax=8000,
         )
-
-        available_providers = onnxruntime.get_available_providers()
-        if providers is None:
-            if "CUDAExecutionProvider" in available_providers:
-                providers = ["CUDAExecutionProvider"]
-            else:
-                providers = ["CPUExecutionProvider"]
 
         self.model = onnxruntime.InferenceSession(
             model_path, providers=providers
